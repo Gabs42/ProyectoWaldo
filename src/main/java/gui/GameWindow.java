@@ -22,6 +22,7 @@ import character.Character;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 public class GameWindow extends JFrame{
     int charHeight = 40;
     int charWidth = 40;
-    int charAmount = 15;
+    int charAmount = 50;
     private ArrayList<Integer> usedX = new ArrayList<>();
     private ArrayList<Integer> usedY = new ArrayList<>();
     private int encontrados = 0;
@@ -80,11 +81,13 @@ public class GameWindow extends JFrame{
                     int posX = random(0,this.getWidth()-(this.charHeight+5));
                     int posY = random(0,this.getHeight()-(this.charWidth+30));
                     if(posicionOcupada(posX,posY)||areaInvalida(posX,posY)){
-                        
+                        continue;
                     }
                     else{
                         this.usedX.add(posX);
                         this.usedY.add(posY);
+                        System.out.println(posX);
+                        System.out.println(posY);
                         bt1.setBounds(posX,posY,this.charWidth,this.charHeight);
                         posEncontrada = true;
                     }
@@ -127,7 +130,7 @@ public class GameWindow extends JFrame{
     
     private void cargarBackgroundCharacters() throws IOException {
         int counter = 0;
-        while(counter!=this.charAmount){
+        while(counter<=this.charAmount){
             for(String image:s.getCharacters().get(0).getImages()){
                 BufferedImage character = ImageIO.read(new File(image));
                 Image resized = character.getScaledInstance(this.charWidth,this.charHeight,Image.SCALE_DEFAULT);
@@ -136,9 +139,9 @@ public class GameWindow extends JFrame{
                 boolean posEncontrada = false;
                 while(!posEncontrada){
                     int posX = random(0,this.getWidth()-(this.charHeight+5));
-                    int posY = random(0,this.getHeight()-(this.charWidth+30));
+                    int posY = random(0,this.getHeight()-(this.charWidth+30));                  
                     if(posicionOcupada(posX,posY)||areaInvalida(posX,posY)){
-                        
+                        continue;
                     }
                     else{
                         this.usedX.add(posX);
@@ -150,6 +153,7 @@ public class GameWindow extends JFrame{
                 //lbl.setBounds(1024-(this.charHeight+5),768-(this.charWidth+30),this.charWidth,this.charHeight);
                 add(lbl);
                 counter+=1;
+               
             }
         }
         
@@ -166,20 +170,35 @@ public class GameWindow extends JFrame{
     }
 
     private boolean posicionOcupada(int posX, int posY) {
+        
+        int listCounter = 0;
+        while(listCounter < this.usedX.size()){
+            if((posX>=this.usedX.get(listCounter) && posX<(this.usedX.get(listCounter)+this.charWidth))||(posX+this.charWidth>this.usedX.get(listCounter) && posX+this.charWidth<=(this.usedX.get(listCounter)+this.charWidth))){
+                if(posY>=this.usedY.get(listCounter) && posY<(this.usedY.get(listCounter)+this.charHeight)||(posY+this.charHeight>this.usedY.get(listCounter) && posY+this.charHeight<=(this.usedY.get(listCounter)+this.charHeight))){
+                    return true;
+                }
+            }
+            listCounter+=1;
+        }
+        return false;
+        /*
         for(int x:this.usedX){
             for(int y:this.usedY){
-                if(posX>x && posX<x+this.charWidth && posY>y&&posY<this.charHeight){
+                if(posX>x && posX<x+this.charWidth && posY>y &&posY<this.charHeight){
                     return true;
                 }
             }
         }
-        return false;
+        */
+        
     }
 
     private boolean areaInvalida(int posX, int posY) {
         for(Rectangle r:this.s.getUnavailableAreas()){
-            if(posX>r.x && posX<r.width && posY>r.y && posY<r.height){
+            if((posX>r.x && posX<r.width && posY>r.y && posY<r.height)||(posX+this.charWidth>r.x && posX+this.charWidth<r.width && posY+this.charHeight>r.y && posY+this.charHeight<r.height)){
                 return true;
+                
+                
             }
         }
         return false;

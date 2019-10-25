@@ -23,11 +23,13 @@ import prototype.PrototypeFactory;
  */
 public class test {
     public static void main(String args[]) throws IOException{
+        
         Rectangle r = new Rectangle();
         r.x = 0;
         r.y = 0;
         r.width = 1024;
         r.height = 200;
+        
         ConfigurationWaldo waldoConf = ConfigurationWaldo.getInstance();
         Character waldo = (Character) (new CharacterBuilder()).setName("waldo").addImage(waldoConf.getMainChars().get(0)).build();
         Character wenda = (Character) (new CharacterBuilder()).setName("wenda").addImage(waldoConf.getMainChars().get(1)).build();

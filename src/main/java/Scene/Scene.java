@@ -18,11 +18,13 @@ public class Scene {
     private ArrayList<Character> mainCharacters;
     private Background background;
     private ArrayList<Rectangle> unavailableAreas = new ArrayList<Rectangle>();
+    private ConfigurationWaldo config;
 
-    public Scene(ArrayList<Character> characters, ArrayList<Character> mainCharacters, Background background) {
+    public Scene(ArrayList<Character> characters, ArrayList<Character> mainCharacters, Background background,ConfigurationWaldo config) {
         this.characters = characters;
         this.mainCharacters = mainCharacters;
         this.background = background;
+        this.config = config;
     }
 
     public ArrayList<Character> getCharacters() {
@@ -62,4 +64,10 @@ public class Scene {
     private void buildScene(){
         
     }
+
+    public ConfigurationWaldo getConfig() {
+        return config;
+    }
+    
+    
 }

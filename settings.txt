@@ -1,0 +1,5 @@
+charAmount:50
+charWidth:40
+charHeight:40
+windowxSize:1024
+windowySize:768 

@@ -31,7 +31,7 @@ import java.util.Random;
 public class GameWindow extends JFrame{
     int charHeight = 40;
     int charWidth = 40;
-    int charAmount = 50;
+    int charAmount = 25;
     private ArrayList<Integer> usedX = new ArrayList<>();
     private ArrayList<Integer> usedY = new ArrayList<>();
     private int encontrados = 0;
@@ -41,8 +41,8 @@ public class GameWindow extends JFrame{
     JButton btnWaldo2;
     
     public GameWindow(Scene s) throws IOException{
-        cargarVentana();
         this.s = s;
+        cargarVentana();
         cargarBackgroundCharacters();
         cargarImage(); 
         mostrarVentana();
@@ -50,7 +50,10 @@ public class GameWindow extends JFrame{
     
     private void cargarVentana() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setSize(1024,768);
+      setSize(this.s.getConfig().getCharWindowXSizeSetting(),this.s.getConfig().getCharWindowYSetting());
+      this.charHeight = this.s.getConfig().getCharHeightSetting();
+      this.charWidth = this.s.getConfig().getCharWidthSetting();
+      this.charAmount = this.s.getConfig().getCharAmountSetting();
       setResizable(false);
     }
     
@@ -63,7 +66,7 @@ public class GameWindow extends JFrame{
         
         BufferedImage bg = null;
         bg = ImageIO.read(new File(s.getBackground().getImage()));
-        Image bgresized = bg.getScaledInstance(1024, 768, Image.SCALE_DEFAULT);
+        Image bgresized = bg.getScaledInstance(this.s.getConfig().getCharWindowXSizeSetting(),this.s.getConfig().getCharWindowYSetting(), Image.SCALE_DEFAULT);
         
         JLabel lbl = new JLabel();
         lbl.setIcon(new ImageIcon(bgresized));

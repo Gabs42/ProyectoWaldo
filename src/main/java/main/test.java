@@ -24,11 +24,13 @@ import prototype.PrototypeFactory;
 public class test {
     public static void main(String args[]) throws IOException{
         
+        /*
         Rectangle r = new Rectangle();
         r.x = 0;
         r.y = 0;
         r.width = 1024;
         r.height = 200;
+       */
         
         ConfigurationWaldo waldoConf = ConfigurationWaldo.getInstance();
         Character waldo = (Character) (new CharacterBuilder()).setName("waldo").addImage(waldoConf.getMainChars().get(0)).build();
@@ -64,8 +66,11 @@ public class test {
         chars.add(extra);
         Background bg = waldoConf.getBg();
         
-        Scene s = new Scene(chars,main,bg);
-        s.addArea(r);
+        Scene s = new Scene(chars,main,bg,waldoConf);
+        for(Rectangle r:waldoConf.getBackgroundProividas()){
+            s.addArea(r);
+        }
+        //s.addArea(r);
         
         startWindow w = new startWindow(s);
     }
